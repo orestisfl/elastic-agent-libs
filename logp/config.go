@@ -19,6 +19,8 @@ package logp
 
 import (
 	"time"
+
+	"github.com/elastic/elastic-agent-libs/paths"
 )
 
 // Config contains the configuration options for the logger. To create a Config
@@ -40,6 +42,7 @@ type Config struct {
 
 	WithFields map[string]any `config:"with_fields" yaml:"with_fields"`
 
+	Paths       paths.Path
 	environment Environment
 	AddCaller   bool // Adds package and line number info to messages.
 	development bool // Controls how DPanic behaves.

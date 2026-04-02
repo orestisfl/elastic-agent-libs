@@ -31,10 +31,10 @@
 // These settings can be set via the configuration file or via command line flags.
 // The CLI flags overwrite the configuration file options.
 //
-// Use the Resolve function to resolve files to their absolute paths. For example,
+// Use the Resolve method to resolve files to their absolute paths. For example,
 // to look for a file in the config path:
 //
-// cfgfilePath := paths.Resolve(paths.Config, "beat.yml"
+// cfgfilePath := myPaths.Resolve(paths.Config, "beat.yml")
 package paths
 
 import (
@@ -66,10 +66,6 @@ const (
 	Logs FileType = "logs"
 )
 
-// Paths is the Path singleton on which the top level functions from this
-// package operate.
-var Paths = New()
-
 // New creates a new Paths object with all values set to empty values.
 func New() *Path {
 	return &Path{}
@@ -91,13 +87,6 @@ func (paths *Path) InitPaths(cfg *Path) error {
 	}
 
 	return nil
-}
-
-// InitPaths sets the default paths in the configuration based on CLI flags,
-// configuration file and default values. It also tries to create the data
-// path with mode 0750 and returns an error on failure.
-func InitPaths(cfg *Path) error {
-	return Paths.InitPaths(cfg)
 }
 
 // initPaths sets the default paths in the configuration based on CLI flags,
@@ -144,14 +133,6 @@ func (paths *Path) Resolve(fileType FileType, path string) string {
 	default:
 		panic(fmt.Sprintf("Unknown file type: %s", fileType))
 	}
-}
-
-// Resolve resolves a path to a location in one of the default
-// folders. For example, Resolve(Home, "test") returns an absolute
-// path for "test" in the home path.
-// In case path is already an absolute path, the path itself is returned.
-func Resolve(fileType FileType, path string) string {
-	return Paths.Resolve(fileType, path)
 }
 
 // String returns a textual representation
